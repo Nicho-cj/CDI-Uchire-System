@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes Gerenciales - CDI Uchire</title>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../../css/dashboards.css">
+    <link rel="stylesheet" href="../../css/Menus_Director/director.css">
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../lib/chartjs/chart.umd.js"></script>
+
+    <!-- Local Report Libraries -->
+    <script>
+        if (typeof module === 'object') { window._temp_module = module; module = undefined; }
+    </script>
+    <script src="../../lib/vendor/jspdf.umd.min.js"></script>
+    <script src="../../lib/vendor/jspdf.plugin.autotable.min.js"></script>
+    <script src="../../lib/vendor/xlsx.full.min.js"></script>
+    <script>
+        if (window._temp_module) { module = window._temp_module; delete window._temp_module; }
+    </script>
+    <script src="../../js/utils/reports_utils.js"></script>
+    <script defer src="../../Operadores/Operador_Director/js/director_reports.js"></script>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h5 class="fw-bold mb-0">CDI UCHIRE</h5>
+            <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.65rem;">Panel de
+                Rectoría</small>
+        </div>
+
+        <nav class="menu-list">
+            <div class="menu-item"><a href="director_dashboard.html" class="menu-link"><i
+                        class="fas fa-chart-line"></i><span>Panel Principal</span></a></div>
+            <div class="menu-item"><a href="director_departments.html" class="menu-link"><i
+                        class="fas fa-hospital-alt"></i><span>Estructura Áreas</span></a></div>
+            <div class="menu-item"><a href="director_users.html" class="menu-link"><i
+                        class="fas fa-user-lock"></i><span>Cuentas Acceso</span></a></div>
+            <div class="menu-item"><a href="director_audit.html" class="menu-link"><i
+                        class="fas fa-clipboard-list"></i><span>Bitácora Auditoría</span></a></div>
+            <div class="menu-item"><a href="director_patients.html" class="menu-link"><i
+                        class="fas fa-id-card"></i><span>Registro Pacientes</span></a></div>
+            <div class="menu-item"><a href="director_consultation.html" class="menu-link"><i
+                        class="fas fa-user-md"></i><span>Monitoreo Consultas</span></a></div>
+            <div class="menu-item"><a href="director_pharmacy.html" class="menu-link"><i
+                        class="fas fa-pills"></i><span>Almacén Farmacia</span></a></div>
+            <div class="menu-item"><a href="director_reports.html" class="menu-link active"><i
+                        class="fas fa-file-medical"></i><span>Reportes Gerenciales</span></a></div>
+
+            <div class="mt-5 pt-4 border-top">
+                <a href="../logout.html" class="menu-link text-danger"><i
+                        class="fas fa-sign-out-alt"></i><span>Finalizar Sesión</span></a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="mb-5 animate-fade">
+            <h3 class="fw-bold mb-1">Centro de Análisis y Exportación</h3>
+            <p class="text-muted">Generación de indicadores estratégicos y documentos oficiales.</p>
+        </header>
+
+        <div class="glass-card mb-5 animate-fade">
+            <h5 class="fw-bold mb-4"><i class="fas fa-filter me-2 text-primary"></i>Exportación Personalizada</h5>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label x-small fw-bold">Tipo de Reporte</label>
+                    <select id="custom-type" class="form-select rounded-pill border-light">
+                        <option value="pacientes">Registro de Pacientes</option>
+                        <option value="consultas">Consultas Médicas</option>
+                        <option value="inventario">Inventario de Farmacia</option>
+                        <option value="auditoria">Bitácora de Auditoría</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label x-small fw-bold">Desde</label>
+                    <input type="date" id="custom-start" class="form-control rounded-pill border-light">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label x-small fw-bold">Hasta</label>
+                    <input type="date" id="custom-end" class="form-control rounded-pill border-light">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary rounded-pill w-100 shadow-sm" id="btn-custom-pdf">
+                        <i class="fas fa-file-pdf me-2"></i>Generar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-4 animate-fade">Reportes Maestros</h5>
+        <div class="row g-4 animate-fade">
+            <div class="col-md-3">
+                <div class="report-card" id="rep-patients">
+                    <h5 class="fw-bold mb-1">Pacientes</h5>
+                    <p class="x-small text-muted mb-0">Base de datos de historias.</p>
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="report-card" id="rep-consultations">
+                    <h5 class="fw-bold mb-1">Consultas</h5>
+                    <p class="x-small text-muted mb-0">Resumen de atenciones.</p>
+                    <i class="fas fa-notes-medical"></i>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="report-card" id="rep-inventory">
+                    <h5 class="fw-bold mb-1">Farmacia</h5>
+                    <p class="x-small text-muted mb-0">Kardex de existencias.</p>
+                    <i class="fas fa-box-open"></i>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="report-card" id="rep-audit">
+                    <h5 class="fw-bold mb-1">Seguridad</h5>
+                    <p class="x-small text-muted mb-0">Bitácora de auditoría.</p>
+                    <i class="fas fa-shield-virus"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card mt-5 p-4 animate-fade" style="animation-delay: 0.2s;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-bold mb-0">Tendencia de Atenciones (Últimos 30 días)</h5>
+                <div class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">Datos en Tiempo Real
+                </div>
+            </div>
+            <div style="height: 350px;">
+                <canvas id="trendsChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

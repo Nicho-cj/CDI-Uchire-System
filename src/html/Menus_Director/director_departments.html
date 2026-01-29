@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructura de Áreas - CDI Uchire</title>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../../css/dashboards.css">
+    <link rel="stylesheet" href="../../css/Menus_Director/director.css">
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="../../Operadores/Operador_Director/js/director_departments.js"></script>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h5 class="fw-bold mb-0">CDI UCHIRE</h5>
+            <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.65rem;">Panel de
+                Rectoría</small>
+        </div>
+
+        <nav class="menu-list">
+            <div class="menu-item"><a href="director_dashboard.html" class="menu-link"><i
+                        class="fas fa-chart-line"></i><span>Panel Principal</span></a></div>
+            <div class="menu-item"><a href="director_departments.html" class="menu-link active"><i
+                        class="fas fa-hospital-alt"></i><span>Estructura Áreas</span></a></div>
+            <div class="menu-item"><a href="director_users.html" class="menu-link"><i
+                        class="fas fa-user-lock"></i><span>Cuentas Acceso</span></a></div>
+            <div class="menu-item"><a href="director_audit.html" class="menu-link"><i
+                        class="fas fa-clipboard-list"></i><span>Bitácora Auditoría</span></a></div>
+            <div class="menu-item"><a href="director_patients.html" class="menu-link"><i
+                        class="fas fa-id-card"></i><span>Registro Pacientes</span></a></div>
+            <div class="menu-item"><a href="director_consultation.html" class="menu-link"><i
+                        class="fas fa-user-md"></i><span>Monitoreo Consultas</span></a></div>
+            <div class="menu-item"><a href="director_pharmacy.html" class="menu-link"><i
+                        class="fas fa-pills"></i><span>Almacén Farmacia</span></a></div>
+            <div class="menu-item"><a href="director_reports.html" class="menu-link"><i
+                        class="fas fa-file-medical"></i><span>Reportes Gerenciales</span></a></div>
+
+            <div class="mt-5 pt-4 border-top">
+                <a href="../logout.html" class="menu-link text-danger"><i
+                        class="fas fa-sign-out-alt"></i><span>Finalizar Sesión</span></a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-5 animate-fade">
+            <div>
+                <h3 class="fw-bold mb-1">Organización de Servicios</h3>
+                <p class="text-muted mb-0">Gestión de departamentos operativos del CDI.</p>
+            </div>
+            <button class="btn btn-primary rounded-pill px-4 shadow-md border-0" id="btn-add-dept"
+                style="background: linear-gradient(135deg, var(--medical-primary), var(--medical-secondary));">
+                <i class="fas fa-plus me-2"></i>Crear Nueva Área
+            </button>
+        </header>
+
+        <div class="row g-4 animate-fade" id="depts-grid">
+            <!-- Dynamic Dept Cards -->
+        </div>
+    </main>
+
+    <!-- Modal for Dept (CRUD) -->
+    <div class="modal fade glass-modal" id="deptModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold" id="deptModalTitle">Gestión de Área</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="dept-form">
+                    <div class="modal-body py-4">
+                        <input type="hidden" id="d-id">
+                        <div class="mb-3">
+                            <label class="form-label x-small fw-bold text-muted text-uppercase">Nombre del Área /
+                                Servicio</label>
+                            <input type="text" id="d-name" class="form-control rounded-3 border-0 bg-light p-2"
+                                placeholder="Ej: Rayos X, Farmacia..." required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label x-small fw-bold text-muted text-uppercase">Estado</label>
+                            <select id="d-status" class="form-select rounded-3 border-0 bg-light p-2" required>
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                                <option value="En revisión">En revisión</option>
+                            </select>
+                        </div>
+                        <div class="mb-0">
+                            <label class="form-label x-small fw-bold text-muted text-uppercase">Descripción</label>
+                            <textarea id="d-desc" class="form-control rounded-3 border-0 bg-light p-2"
+                                rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light rounded-pill px-4"
+                            data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4"
+                            style="background: var(--medical-primary); border: none;">Guardar Área</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast align-items-center text-white bg-dark border-0 rounded-4 shadow-lg"
+            role="alert">
+            <div class="d-flex">
+                <div class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Pacientes - CDI Uchire</title>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../../css/dashboards.css">
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Local Report Libraries -->
+    <script>
+        if (typeof module === 'object') { window._temp_module = module; module = undefined; }
+    </script>
+    <script src="../../lib/vendor/jspdf.umd.min.js"></script>
+    <script src="../../lib/vendor/jspdf.plugin.autotable.min.js"></script>
+    <script src="../../lib/vendor/xlsx.full.min.js"></script>
+    <script>
+        if (window._temp_module) { module = window._temp_module; delete window._temp_module; }
+    </script>
+    <script src="../../js/utils/reports_utils.js"></script>
+    <link rel="stylesheet" href="../../css/Menus_Consulta/Patient_records.css">
+    <script defer src="../../Operadores/Operador_Consulta/js/Patient_records.js"></script>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-hospital-user"></i>
+            </div>
+            <h5 class="fw-bold mb-0">CDI UCHIRE</h5>
+            <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.65rem;">Módulo Operativo</small>
+        </div>
+
+        <nav class="menu-list">
+            <div class="menu-item">
+                <a href="dashboard_cosn.html" class="menu-link">
+                    <i class="fas fa-th-large"></i>
+                    <span>Panel Principal</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="consultation.html" class="menu-link">
+                    <i class="fas fa-user-md"></i>
+                    <span>Consultas</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="Patient_records.html" class="menu-link active">
+                    <i class="fas fa-id-card"></i>
+                    <span>Pacientes</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="Pharmacy.html" class="menu-link">
+                    <i class="fas fa-pills"></i>
+                    <span>Farmacia</span>
+                </a>
+            </div>
+            <div class="menu-item">
+                <a href="Reports.html" class="menu-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Reportes</span>
+                </a>
+            </div>
+
+            <div class="mt-5 pt-4 border-top">
+                <a href="../logout.html" class="menu-link text-danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-5 animate-fade">
+            <div>
+                <h3 class="fw-bold mb-1">Base de Datos de Pacientes</h3>
+                <p class="text-muted mb-0">Gestión centralizada de historias médicas y registros.</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="nav-user-pill">
+                    <span class="small fw-semibold text-secondary" id="current-date"></span>
+                    <div class="vr mx-2"></div>
+                    <img src="" alt="Avatar" class="rounded-circle" width="32" id="user-avatar">
+                    <span class="small fw-bold" id="user-name">Usuario</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="row g-4 mb-5 animate-fade" style="animation-delay: 0.1s;">
+            <div class="col-md-4">
+                <div class="stat-card-mini d-flex align-items-center">
+                    <div class="stat-icon bg-primary bg-opacity-10 text-primary mb-0 me-3">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-monthly">0</h4>
+                        <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.7rem;">Registro
+                            Mensual</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card-mini d-flex align-items-center">
+                    <div class="stat-icon bg-info bg-opacity-10 text-info mb-0 me-3">
+                        <i class="fas fa-calendar-week"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-weekly">0</h4>
+                        <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.7rem;">Registro
+                            Semanal</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card-mini d-flex align-items-center">
+                    <div class="stat-icon bg-success bg-opacity-10 text-success mb-0 me-3">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-today">0</h4>
+                        <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.7rem;">Registro
+                            Diario</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="glass-card animate-fade" style="animation-delay: 0.2s;">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                <div class="search-container flex-grow-1" style="max-width: 400px;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" class="form-control"
+                        placeholder="Buscar por CI, nombre o apellido...">
+                </div>
+                <div class="d-flex gap-2">
+                    <div class="dropdown border-end pe-2">
+                        <button class="btn btn-outline-secondary rounded-pill px-3 dropdown-toggle" type="button"
+                            data-bs-toggle="dropdown">
+                            <i class="fas fa-file-export me-2"></i>Exportar
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end rounded-4 shadow-sm border-0">
+                            <li><a class="dropdown-item small py-2" href="#" id="export-excel"><i
+                                        class="fas fa-file-excel me-2 text-success"></i>Base de Datos Excel</a></li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary rounded-pill px-4 fw-bold" id="btn-new-patient">
+                        <i class="fas fa-user-plus me-2"></i>Nuevo Paciente
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="premium-table">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('name')" style="cursor: pointer;">Paciente <i
+                                    class="fas fa-sort small ms-1 text-muted"></i></th>
+                            <th onclick="sortTable('ci')" style="cursor: pointer;">Identificación <i
+                                    class="fas fa-sort small ms-1 text-muted"></i></th>
+                            <th onclick="sortTable('sex')" style="cursor: pointer;">Género <i
+                                    class="fas fa-sort small ms-1 text-muted"></i></th>
+                            <th onclick="sortTable('age')" style="cursor: pointer;">Fecha Nac. <i
+                                    class="fas fa-sort small ms-1 text-muted"></i></th>
+                            <th onclick="sortTable('visit')" style="cursor: pointer;">Registro <i
+                                    class="fas fa-sort small ms-1 text-muted"></i></th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patients-tbody">
+                        <!-- Data loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="text-center py-5 d-none">
+                <div class="mb-3 text-muted opacity-25">
+                    <i class="fas fa-folder-open fa-4x"></i>
+                </div>
+                <h5 class="text-muted">No se encontraron pacientes</h5>
+                <p class="text-muted small">Intenta ajustar tu búsqueda o registra uno nuevo.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Patient Modal -->
+    <div class="modal fade glass-modal" id="patientModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold" id="modal-title">Registrar Nuevo Paciente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="patient-form">
+                    <div class="modal-body py-4">
+                        <input type="hidden" id="patient-id">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Cédula</label>
+                                <input type="text" id="p-cedula" class="form-control" placeholder="12.345.678"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Nombres</label>
+                                <input type="text" id="p-nombres" class="form-control" placeholder="Juan Alberto"
+                                    required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Apellidos</label>
+                                <input type="text" id="p-apellidos" class="form-control" placeholder="Pérez Gómez"
+                                    required>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">Teléfono</label>
+                                <div class="input-group">
+                                    <select id="p-tel-prefix" class="form-select" style="max-width: 90px;">
+                                        <option value="0412">0412</option>
+                                        <option value="0422">0422</option>
+                                        <option value="0414">0414</option>
+                                        <option value="0424">0424</option>
+                                        <option value="0416">0416</option>
+                                        <option value="0426">0426</option>
+                                    </select>
+                                    <input type="text" id="p-tel-body" class="form-control" placeholder="1234567"
+                                        pattern="[0-9]{7}" maxlength="7"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                                </div>
+                                <small class="text-muted" style="font-size: 0.7rem;">7 dígitos requeridos</small>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Fecha de Nacimiento</label>
+                                <input type="date" id="p-fecha-nacimiento" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Sexo</label>
+                                <select id="p-sexo" class="form-select" required>
+                                    <option value="" selected disabled>Seleccionar...</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-light rounded-pill px-4"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4">Guardar Registro</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Patient Record Modal -->
+    <div class="modal fade glass-modal" id="recordModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold"><i class="fas fa-file-medical me-2 text-primary"></i>Ficha del Paciente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-12 border-end">
+                            <h6 class="fw-bold text-uppercase small text-muted mb-3">Datos Personales</h6>
+                            <div id="paciente-info">
+                                <!-- Loaded via JS -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="fw-bold text-uppercase small text-muted mb-3">Historial de Visitas</h6>
+                            <div id="visit-history" class="small">
+                                <!-- Loaded via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4"
+                        data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary rounded-pill px-4" id="btn-print-ficha"><i
+                            class="fas fa-print me-2"></i>Imprimir Ficha</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast align-items-center text-white bg-dark border-0 rounded-4 shadow-lg"
+            role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <!-- Message goes here -->
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

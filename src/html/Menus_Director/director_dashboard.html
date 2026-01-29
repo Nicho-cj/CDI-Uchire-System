@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Rectoría - CDI Uchire</title>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../../css/dashboards.css">
+    <link rel="stylesheet" href="../../css/Menus_Director/director.css">
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="../../Operadores/Operador_Director/js/director_dashboard.js"></script>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h5 class="fw-bold mb-0">CDI UCHIRE</h5>
+            <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.65rem;">Panel de
+                Rectoría</small>
+        </div>
+
+        <nav class="menu-list">
+            <div class="menu-item"><a href="director_dashboard.html" class="menu-link active"><i
+                        class="fas fa-chart-line"></i><span>Panel Principal</span></a></div>
+            <div class="menu-item"><a href="director_users.html" class="menu-link"><i
+                        class="fas fa-user-lock"></i><span>Cuentas Acceso</span></a></div>
+            <div class="menu-item"><a href="director_departments.html" class="menu-link"><i
+                        class="fas fa-hospital-alt"></i><span>Estructura Áreas</span></a></div>
+            <div class="menu-item"><a href="director_users.html" class="menu-link"><i
+                        class="fas fa-user-lock"></i><span>Cuentas Acceso</span></a></div>
+            <div class="menu-item"><a href="director_audit.html" class="menu-link"><i
+                        class="fas fa-clipboard-list"></i><span>Bitácora Auditoría</span></a></div>
+            <div class="menu-item"><a href="director_patients.html" class="menu-link"><i
+                        class="fas fa-id-card"></i><span>Registro Pacientes</span></a></div>
+            <div class="menu-item"><a href="director_consultation.html" class="menu-link"><i
+                        class="fas fa-user-md"></i><span>Monitoreo Consultas</span></a></div>
+            <div class="menu-item"><a href="director_pharmacy.html" class="menu-link"><i
+                        class="fas fa-pills"></i><span>Almacén Farmacia</span></a></div>
+            <div class="menu-item"><a href="director_reports.html" class="menu-link"><i
+                        class="fas fa-file-medical"></i><span>Reportes Gerenciales</span></a></div>
+
+            <div class="mt-5 pt-4 border-top">
+                <a href="../logout.html" class="menu-link text-danger"><i
+                        class="fas fa-sign-out-alt"></i><span>Finalizar
+                        Sesión</span></a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-5 animate-fade">
+            <div>
+                <h3 class="fw-bold mb-1">Bienvenido, <span id="user-name">Director</span></h3>
+                <p class="text-muted mb-0">Estado operativo global del centro de salud.</p>
+            </div>
+            <div class="nav-user-pill">
+                <span class="small fw-semibold text-secondary" id="current-date"></span>
+                <div class="vr mx-2"></div>
+                <img src="" alt="Avatar" class="rounded-circle" width="32" id="user-avatar">
+            </div>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="row g-4 mb-5 animate-fade" style="animation-delay: 0.1s;">
+            <div class="col-md-3">
+                <div class="glass-card d-flex align-items-center p-3">
+                    <div class="stat-icon bg-primary bg-opacity-10 text-primary me-3 mb-0">
+                        <i class="fas fa-users-medical"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-staff">0</h4>
+                        <small class="text-muted small fw-semibold">Usuarios Sistema</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card d-flex align-items-center p-3">
+                    <div class="stat-icon bg-success bg-opacity-10 text-success me-3 mb-0">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-patients">0</h4>
+                        <small class="text-muted small fw-semibold">Pacientes en Base</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card d-flex align-items-center p-3">
+                    <div class="stat-icon bg-info bg-opacity-10 text-info me-3 mb-0">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-depts">0</h4>
+                        <small class="text-muted small fw-semibold">Áreas Activas</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="glass-card d-flex align-items-center p-3">
+                    <div class="stat-icon bg-danger bg-opacity-10 text-danger me-3 mb-0">
+                        <i class="fas fa-shield-virus"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-audit">0</h4>
+                        <small class="text-muted small fw-semibold">Eventos de Seguridad</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8 animate-fade" style="animation-delay: 0.2s;">
+                <div class="glass-card p-4">
+                    <h5 class="fw-bold mb-4">Módulos de Supervisión Gerencial</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="director_users.html" class="quick-action-card">
+                                <div class="quick-action-icon"><i class="fas fa-user-lock"></i></div>
+                                <h6 class="fw-bold">Gestión de Acceso</h6>
+                                <p class="text-muted x-small mb-0">Control de cuentas de acceso, roles y contraseñas.
+                                </p>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="director_reports.html" class="quick-action-card">
+                                <div class="quick-action-icon"
+                                    style="background: linear-gradient(135deg, #4361ee, #3f37c9);"><i
+                                        class="fas fa-file-chart-column"></i></div>
+                                <h6 class="fw-bold">Reportes</h6>
+                                <p class="text-muted x-small mb-0">Estadísticas institucionales y exportación de datos.
+                                </p>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="director_pharmacy.html" class="quick-action-card">
+                                <div class="quick-action-icon"
+                                    style="background: linear-gradient(135deg, #7209b7, #560bad);"><i
+                                        class="fas fa-pills"></i></div>
+                                <h6 class="fw-bold">Farmacia</h6>
+                                <p class="text-muted x-small mb-0">Monitoreo de inventario y Kardex de medicamentos.</p>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="director_audit.html" class="quick-action-card">
+                                <div class="quick-action-icon"
+                                    style="background: linear-gradient(135deg, #f72585, #b5179e);"><i
+                                        class="fas fa-clipboard-check"></i></div>
+                                <h6 class="fw-bold">Seguridad</h6>
+                                <p class="text-muted x-small mb-0">Bitácora de auditoría y rastreo de operaciones.</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-top">
+                        <h6 class="fw-bold mb-4">Resumen de Registros</h6>
+                        <div class="row g-3 text-center">
+                            <div class="col-md-4">
+                                <div class="p-3 rounded-4 bg-primary bg-opacity-10">
+                                    <div class="small fw-bold text-primary mb-1">CONSULTAS</div>
+                                    <h3 class="fw-bold mb-0" id="flow-triage">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 rounded-4 bg-warning bg-opacity-10">
+                                    <div class="small fw-bold text-warning mb-1">FARMACIA (PRODUCTOS)</div>
+                                    <h3 class="fw-bold mb-0" id="flow-waiting">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="p-3 rounded-4 bg-success bg-opacity-10">
+                                    <div class="small fw-bold text-success mb-1">PACIENTES</div>
+                                    <h3 class="fw-bold mb-0" id="flow-attended">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 animate-fade" style="animation-delay: 0.3s;">
+                <div class="glass-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0">Actividad Reciente</h5>
+                        <a href="director_audit.html" class="small text-primary text-decoration-none">Ver todo</a>
+                    </div>
+                    <div id="recent-activity">
+                        <div class="text-center py-5 text-muted opacity-50">
+                            <i class="fas fa-spinner fa-spin me-2"></i>Sincronizando...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario Farmacéutico - CDI Uchire</title>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../../css/dashboards.css">
+    <link rel="stylesheet" href="../../css/Menus_Director/director.css">
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="../../Operadores/Operador_Director/js/director_pharmacy.js"></script>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h5 class="fw-bold mb-0">CDI UCHIRE</h5>
+            <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.65rem;">Panel de
+                Rectoría</small>
+        </div>
+
+        <nav class="menu-list">
+            <div class="menu-item"><a href="director_dashboard.html" class="menu-link"><i
+                        class="fas fa-chart-line"></i><span>Panel Principal</span></a></div>
+            <div class="menu-item"><a href="director_departments.html" class="menu-link"><i
+                        class="fas fa-hospital-alt"></i><span>Estructura Áreas</span></a></div>
+            <div class="menu-item"><a href="director_users.html" class="menu-link"><i
+                        class="fas fa-user-lock"></i><span>Cuentas Acceso</span></a></div>
+            <div class="menu-item"><a href="director_audit.html" class="menu-link"><i
+                        class="fas fa-clipboard-list"></i><span>Bitácora Auditoría</span></a></div>
+            <div class="menu-item"><a href="director_patients.html" class="menu-link"><i
+                        class="fas fa-id-card"></i><span>Registro Pacientes</span></a></div>
+            <div class="menu-item"><a href="director_consultation.html" class="menu-link"><i
+                        class="fas fa-user-md"></i><span>Monitoreo Consultas</span></a></div>
+            <div class="menu-item"><a href="director_pharmacy.html" class="menu-link active"><i
+                        class="fas fa-pills"></i><span>Almacén Farmacia</span></a></div>
+            <div class="menu-item"><a href="director_reports.html" class="menu-link"><i
+                        class="fas fa-file-medical"></i><span>Reportes Gerenciales</span></a></div>
+
+            <div class="mt-5 pt-4 border-top">
+                <a href="../logout.html" class="menu-link text-danger"><i
+                        class="fas fa-sign-out-alt"></i><span>Finalizar Sesión</span></a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-5 animate-fade">
+            <div>
+                <h3 class="fw-bold mb-1">Inventario de Medicamentos</h3>
+                <p class="text-muted mb-0">Control de existencias y suministros críticos de farmacia.</p>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-primary rounded-pill px-4 shadow-md border-0" id="btn-add-drug"
+                    style="background: linear-gradient(135deg, var(--medical-primary), var(--medical-secondary));">
+                    <i class="fas fa-plus me-2"></i>Registrar Medicamento
+                </button>
+            </div>
+        </header>
+
+        <!-- Search and Filter -->
+        <div class="glass-card mb-4 animate-fade">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="search-container flex-grow-1">
+                        <i class="fas fa-search me-2 text-muted"></i>
+                        <input type="text" id="search-pharmacy" class="form-control border-0 bg-transparent"
+                            placeholder="Buscar por nombre comercial o principio activo...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-0 overflow-hidden animate-fade" style="animation-delay: 0.1s;">
+            <div class="table-responsive">
+                <table class="premium-table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Nombre Comercial</th>
+                            <th>Principio Activo</th>
+                            <th>Concentración</th>
+                            <th>Presentación</th>
+                            <th>Cantidad</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pharmacy-tbody">
+                        <!-- Loaded through JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Drug Registration -->
+    <div class="modal fade glass-modal" id="drugModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold" id="drugModalTitle">Gestión de Medicamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="drug-form">
+                    <div class="modal-body py-4">
+                        <input type="hidden" id="p-id">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label x-small fw-bold text-muted text-uppercase">Nombre
+                                    Comercial</label>
+                                <input type="text" id="p-name" class="form-control rounded-3 border-0 bg-light p-2"
+                                    required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label x-small fw-bold text-muted text-uppercase">Principio
+                                    Activo</label>
+                                <input type="text" id="p-active" class="form-control rounded-3 border-0 bg-light p-2"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label
+                                    class="form-label x-small fw-bold text-muted text-uppercase">Concentración</label>
+                                <div class="input-group">
+                                    <input type="number" id="p-conc-val"
+                                        class="form-control rounded-start bg-light border-0" placeholder="Ej: 500"
+                                        required>
+                                    <select id="p-conc-unit" class="form-select bg-light border-0"
+                                        style="max-width: 80px;">
+                                        <option value="mg">mg</option>
+                                        <option value="g">g</option>
+                                        <option value="ml">ml</option>
+                                        <option value="mcg">mcg</option>
+                                        <option value="UI">UI</option>
+                                        <option value="%">%</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label x-small fw-bold text-muted text-uppercase">Presentación</label>
+                                <select id="p-present" class="form-select rounded-3 border-0 bg-light p-2" required>
+                                    <option value="" disabled selected>Seleccione...</option>
+                                    <option value="Tabletas">Tabletas</option>
+                                    <option value="Cápsulas">Cápsulas</option>
+                                    <option value="Jarabe">Jarabe</option>
+                                    <option value="Inyectable">Inyectable</option>
+                                    <option value="Crema/Ungüento">Crema/Ungüento</option>
+                                    <option value="Gotas">Gotas</option>
+                                    <option value="Polvo">Polvo</option>
+                                    <option value="Ampollas">Ampollas</option>
+                                    <option value="Frasco">Frasco</option>
+                                    <option value="Suspensión">Suspensión</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label x-small fw-bold text-muted text-uppercase">Cantidad /
+                                    Stock</label>
+                                <input type="number" id="p-stock" class="form-control rounded-3 border-0 bg-light p-2"
+                                    value="0" min="0" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light rounded-pill px-4"
+                            data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4"
+                            style="background: var(--medical-primary); border: none;">Guardar Medicamento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast align-items-center text-white bg-dark border-0 rounded-4 shadow-lg"
+            role="alert">
+            <div class="d-flex">
+                <div class="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

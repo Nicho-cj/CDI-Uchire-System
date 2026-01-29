@@ -1,0 +1,157 @@
+:root {
+    --medical-primary: #0a9396;
+    --medical-dark: #005f73;
+    --medical-light: #e9d8a6;
+    --bg-gradient: linear-gradient(135deg, #e0fbfc 0%, #98c1d9 100%);
+}
+
+body {
+    background: var(--bg-gradient);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.login-card {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 95, 115, 0.15);
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Barra decorativa superior */
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--medical-primary), var(--medical-light));
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: none;
+    text-align: center;
+    padding: 2.5rem 2rem 1rem;
+}
+
+.logo-circle {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, var(--medical-primary), var(--medical-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 8px 20px rgba(10, 147, 150, 0.3);
+    color: white;
+    font-size: 2.5rem;
+}
+
+.system-title {
+    color: var(--medical-dark);
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    font-size: 1.5rem;
+}
+
+.system-subtitle {
+    color: #6c757d;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Estilos de Inputs */
+.input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+    color: var(--medical-primary);
+    border-radius: 10px 0 0 10px;
+}
+
+.form-control {
+    border-left: none;
+    background-color: #f8f9fa;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    border-radius: 0 10px 10px 0;
+}
+
+.form-control:focus {
+    background-color: white;
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+
+/* Enfoque visual personalizado para el grupo */
+.input-group:focus-within {
+    box-shadow: 0 0 0 0.25rem rgba(10, 147, 150, 0.15);
+    border-radius: 10px;
+}
+
+.input-group:focus-within .input-group-text,
+.input-group:focus-within .form-control {
+    border-color: var(--medical-primary);
+    background-color: white;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--medical-primary), var(--medical-dark));
+    border: none;
+    padding: 0.8rem;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(10, 147, 150, 0.3);
+}
+
+.btn-outline-secondary {
+    border-radius: 10px;
+    border-color: #dee2e6;
+    color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+    color: var(--medical-dark);
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #adb5bd;
+    margin-top: 1.5rem;
+}
+
+/* Animación de entrada */
+.animate-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

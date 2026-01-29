@@ -1,0 +1,31 @@
+.waiting-time-badge {
+    background: rgba(10, 147, 150, 0.1);
+    color: var(--medical-primary);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.doctor-pill {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: var(--transition);
+}
+
+.doctor-pill:hover {
+    border-color: var(--medical-primary);
+    background: white;
+    box-shadow: var(--shadow-soft);
+}
+
+.notification-card {
+    border-left: 4px solid var(--medical-primary);
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}

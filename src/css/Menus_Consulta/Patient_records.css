@@ -1,0 +1,85 @@
+/* Premium Modal Styles */
+.glass-modal {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+}
+
+.glass-modal .modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-radius: 1.5rem;
+}
+
+.glass-modal .modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+}
+
+.glass-modal .form-label {
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.glass-modal .form-control,
+.glass-modal .form-select {
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.glass-modal .form-control:focus {
+    box-shadow: 0 0 0 3px rgba(10, 147, 150, 0.1);
+    border-color: var(--medical-primary);
+}
+
+.stat-card-mini {
+    padding: 1.25rem;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid var(--glass-border);
+    transition: var(--transition);
+}
+
+.stat-card-mini:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-soft);
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-container i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.search-container input {
+    padding-left: 45px;
+    border-radius: 15px;
+    border: 1px solid #e2e8f0;
+    background: white;
+}
+
+.btn-action {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.toast-container {
+    z-index: 2000;
+}

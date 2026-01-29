@@ -1,0 +1,92 @@
+CREATE TABLE IF NOT EXISTS roles (
+    id_rol INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre_rol TEXT UNIQUE NOT NULL,
+    descripcion TEXT,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre_completo TEXT NOT NULL,
+    nombre_usuario TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    id_rol INTEGER NOT NULL,
+    estado TEXT DEFAULT 'Activo' CHECK (estado IN ('Activo', 'Inactivo', 'En revisión')),
+    ultimo_acceso DATETIME,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_rol) REFERENCES roles(id_rol)
+);
+
+CREATE TABLE IF NOT EXISTS departamentos (
+    id_departamento INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre_area TEXT UNIQUE NOT NULL,
+    descripcion TEXT,
+    estado TEXT DEFAULT 'Activo' CHECK (estado IN ('Activo', 'Inactivo', 'En revisión'))
+);
+
+CREATE TABLE IF NOT EXISTS pacientes (
+    id_paciente INTEGER PRIMARY KEY AUTOINCREMENT,
+    cedula TEXT UNIQUE NOT NULL,
+    nombres TEXT NOT NULL,
+    apellidos TEXT NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    sexo TEXT NOT NULL CHECK (sexo IN ('M', 'F')),
+    telefono TEXT,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS consultas (
+    id_consulta INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_paciente INTEGER NOT NULL,
+    id_departamento INTEGER NOT NULL,
+    fecha_consulta DATE NOT NULL DEFAULT CURRENT_DATE,
+    hora_consulta TIME NOT NULL,
+    nota_adicional TEXT,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente),
+    FOREIGN KEY (id_departamento) REFERENCES departamentos(id_departamento)
+);
+
+CREATE TABLE IF NOT EXISTS inventario_farmacia (
+    id_medicamento INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre_comercial TEXT NOT NULL,
+    principio_activo TEXT,
+    concentracion TEXT,
+    presentacion TEXT,
+    cantidad INTEGER DEFAULT 0,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS movimientos_farmacia (
+    id_movimiento INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_paciente INTEGER,
+    id_consulta INTEGER,
+    id_medicamento INTEGER NOT NULL,
+    tipo TEXT NOT NULL CHECK (tipo IN ('Entrada', 'Salida')),
+    cantidad INTEGER NOT NULL,
+    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_paciente) REFERENCES pacientes(id_paciente),
+    FOREIGN KEY (id_consulta) REFERENCES consultas(id_consulta),
+    FOREIGN KEY (id_medicamento) REFERENCES inventario_farmacia(id_medicamento)
+);
+
+CREATE TABLE IF NOT EXISTS auditoria_acciones (
+    id_accion INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_usuario INTEGER NOT NULL,
+    nombre_movimiento TEXT NOT NULL,
+    resultado TEXT CHECK (resultado IN ('Exitoso', 'Error', 'Crítica')),
+    fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+);
+
+-- Data inicial básica
+INSERT OR IGNORE INTO roles (nombre_rol) VALUES ('Administrador'), ('Director'), ('Operador');
+
+INSERT OR IGNORE INTO departamentos (nombre_area, descripcion) VALUES ('Farmacia', 'Departamento de gestión de medicamentos e insumos');
+
+-- Usuarios iniciales
+INSERT OR IGNORE INTO usuarios (nombre_completo, nombre_usuario, password_hash, id_rol) VALUES
+('Administrador Principal', 'admin', 'admin123', (SELECT id_rol FROM roles WHERE nombre_rol='Administrador')),
+('Dr. Director', 'director', 'dir123', (SELECT id_rol FROM roles WHERE nombre_rol='Director')),
+('Operador', 'operador', 'op123', (SELECT id_rol FROM roles WHERE nombre_rol='Operador'));

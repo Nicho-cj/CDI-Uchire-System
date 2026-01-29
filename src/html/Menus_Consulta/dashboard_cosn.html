@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal - CDI Uchire</title>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../../css/dashboards.css">
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../../css/Menus_Consulta/dashboard_cosn.css">
+    <script defer src="../../Operadores/Operador_Consulta/js/dashboard_cosn.js"></script>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-hospital"></i>
+            </div>
+            <h5 class="fw-bold mb-0">CDI UCHIRE</h5>
+            <small class="text-muted text-uppercase tracking-wider" style="font-size: 0.65rem;">Módulo Operativo</small>
+        </div>
+
+        <nav class="menu-list">
+            <div class="menu-item"><a href="dashboard_cosn.html" class="menu-link active"><i
+                        class="fas fa-th-large"></i><span>Panel Principal</span></a></div>
+            <div class="menu-item"><a href="consultation.html" class="menu-link"><i
+                        class="fas fa-user-md"></i><span>Consultas</span></a></div>
+            <div class="menu-item"><a href="Patient_records.html" class="menu-link"><i
+                        class="fas fa-id-card"></i><span>Pacientes</span></a></div>
+            <div class="menu-item"><a href="Pharmacy.html" class="menu-link"><i
+                        class="fas fa-pills"></i><span>Farmacia</span></a></div>
+            <div class="menu-item"><a href="Reports.html" class="menu-link"><i
+                        class="fas fa-chart-line"></i><span>Reportes</span></a></div>
+            <div class="mt-5 pt-4 border-top">
+                <a href="../logout.html" class="menu-link text-danger"><i class="fas fa-sign-out-alt"></i><span>Cerrar
+                        Sesión</span></a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="d-flex justify-content-between align-items-center mb-5 animate-fade">
+            <div>
+                <h3 class="fw-bold mb-1">Bienvenido, <span id="user-display-name">Operador</span></h3>
+                <p class="text-muted mb-0">Resumen operativo del Módulo de Atención Médica.</p>
+            </div>
+            <div class="nav-user-pill">
+                <span class="small fw-semibold text-secondary" id="current-date"></span>
+                <div class="vr mx-2"></div>
+                <img src="" alt="User" class="rounded-circle" width="32" id="user-avatar">
+                <span class="small fw-bold" id="user-name">Usuario</span>
+            </div>
+        </header>
+
+        <!-- Search Logic -->
+        <div class="glass-card mb-5 animate-fade">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h5 class="fw-bold mb-1">Localización Rápida de Pacientes</h5>
+                    <p class="text-muted small mb-0">Ingresa la cédula para iniciar una consulta o ver historial.</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="number" id="search-ci" class="form-control rounded-start-pill"
+                            placeholder="Cédula...">
+                        <button class="btn btn-primary rounded-end-pill px-4" id="btn-search-ci">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5 animate-fade" style="animation-delay: 0.1s;">
+            <div class="col-md-3">
+                <div class="stat-card-mini d-flex align-items-center">
+                    <div class="stat-icon bg-primary bg-opacity-10 text-primary me-3 mb-0">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-total-hoy">0</h4>
+                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.6rem;">Nuevos Hoy</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card-mini d-flex align-items-center">
+                    <div class="stat-icon bg-info bg-opacity-10 text-info me-3 mb-0">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-consultas">0</h4>
+                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.6rem;">Consultas
+                            Hoy</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card-mini d-flex align-items-center">
+                    <div class="stat-icon bg-success bg-opacity-10 text-success me-3 mb-0">
+                        <i class="fas fa-mars"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-hombres">0</h4>
+                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.6rem;">Hombres Hoy</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card-mini d-flex align-items-center">
+                    <div class="stat-icon bg-danger bg-opacity-10 text-danger me-3 mb-0">
+                        <i class="fas fa-venus"></i>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold mb-0" id="stat-mujeres">0</h4>
+                        <small class="text-muted text-uppercase fw-bold" style="font-size: 0.6rem;">Mujeres Hoy</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-6">
+                <div class="glass-card h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0">Pacientes Recientes</h5>
+                        <a href="Patient_records.html" class="small fw-bold text-decoration-none">Ver todos</a>
+                    </div>
+                    <div id="recent-patients-list" class="activity-feed">
+                        <!-- JS Loaded -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0">Consultas Recientes</h5>
+                        <a href="consultation.html" class="small fw-bold text-decoration-none">Ver todas</a>
+                    </div>
+                    <div id="recent-consultations-list" class="activity-feed">
+                        <!-- JS Loaded -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Ficha Rápida -->
+    <div class="modal fade glass-modal" id="recordModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="fw-bold">Ficha Rápida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <div id="paciente-info" class="mb-4"></div>
+                    <div id="triaje-info"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

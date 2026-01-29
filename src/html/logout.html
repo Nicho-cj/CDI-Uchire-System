@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesión Finalizada - CDI Uchire</title>
+    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../lib/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../css/dashboards.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .logout-container {
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .logout-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--medical-primary), var(--medical-secondary));
+            color: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+        }
+
+        .logout-icon::after {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            border: 2px dashed var(--medical-primary);
+            border-radius: 40px;
+            opacity: 0.3;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .btn-return {
+            background: linear-gradient(135deg, var(--medical-primary), var(--medical-secondary));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(10, 147, 150, 0.2);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-return:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(10, 147, 150, 0.3);
+            color: white;
+        }
+
+        .countdown-bar {
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .countdown-progress {
+            height: 100%;
+            background: var(--medical-primary);
+            width: 100%;
+            transition: width 5s linear;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="logout-container animate-fade">
+        <div class="glass-card p-5">
+            <div class="logout-icon">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+
+            <h2 class="fw-bold mb-3">¡Sesión Finalizada!</h2>
+            <p class="text-secondary mb-4">
+                Has salido del sistema de forma segura. Gracias por tu labor en el <strong>CDI Uchire</strong>.
+            </p>
+
+            <div class="mb-4">
+                <a href="login.html" class="btn-return">
+                    <i class="fas fa-redo me-2"></i> Volver al Inicio
+                </a>
+            </div>
+
+            <div class="small text-muted">
+                Redirigiendo automáticamente en <span id="seconds">5</span> segundos...
+            </div>
+
+            <div class="countdown-bar">
+                <div class="countdown-progress" id="progress"></div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <small class="text-muted">
+                <i class="fas fa-shield-alt me-1"></i> Conexión Protegida MPPS
+            </small>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de redirección y progreso
+        document.addEventListener('DOMContentLoaded', () => {
+            // Clear session info
+            sessionStorage.clear();
+
+            const progress = document.getElementById('progress');
+            const secondsText = document.getElementById('seconds');
+            let timeLeft = 5;
+
+            // Iniciar animación de barra
+            setTimeout(() => {
+                progress.style.width = '0%';
+            }, 100);
+
+            // Contador
+            const interval = setInterval(() => {
+                timeLeft--;
+                secondsText.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    window.location.href = 'login.html';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

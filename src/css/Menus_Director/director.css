@@ -1,0 +1,170 @@
+/* Director Module Specific Styles */
+
+.menu-section-label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #94a3b8;
+    padding: 1.25rem 1.2rem 0.5rem;
+    letter-spacing: 1.2px;
+}
+
+.stat-card-main {
+    border-left: 5px solid var(--medical-primary);
+}
+
+.activity-item {
+    padding: 1.2rem;
+    border-left: 3px solid #e2e8f0;
+    margin-bottom: 1rem;
+    background: #f8fafc;
+    border-radius: 0 16px 16px 0;
+    transition: var(--transition);
+}
+
+.activity-item:hover {
+    border-left-color: var(--medical-primary);
+    background: white;
+    transform: translateX(5px);
+}
+
+.staff-avatar-circle {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #475569;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.category-pill {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-medic {
+    background: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+}
+
+.category-support {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.report-card {
+    border-radius: 28px;
+    border: 1px solid var(--glass-border);
+    transition: var(--transition);
+    background: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.report-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--medical-primary);
+}
+
+.report-card i {
+    font-size: 3rem;
+    opacity: 0.1;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    color: var(--medical-primary);
+    transition: var(--transition);
+}
+
+.report-card:hover i {
+    opacity: 0.25;
+    transform: scale(1.1) rotate(-10deg);
+}
+
+.patient-avatar {
+    width: 45px;
+    height: 45px;
+    background: #f1f5f9;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--medical-primary);
+    font-size: 1.2rem;
+    border: 1px solid #e2e8f0;
+}
+
+.dept-card {
+    border-radius: 24px;
+    background: white;
+    border: 1px solid var(--glass-border);
+    padding: 1.5rem;
+    transition: var(--transition);
+    height: 100%;
+}
+
+.dept-card:hover {
+    border-color: var(--medical-primary);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-5px);
+}
+
+.audit-log-row {
+    border-left: 4px solid #cbd5e1;
+}
+
+.audit-success { border-left-color: var(--medical-success); }
+.audit-danger { border-left-color: var(--medical-danger); }
+.audit-warning { border-left-color: #f59e0b; }
+
+.x-small { font-size: 0.75rem; }
+
+/* Quick Actions Premium */
+.quick-action-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid var(--glass-border);
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+    box-shadow: var(--shadow-soft);
+}
+
+.quick-action-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--medical-primary);
+}
+
+.quick-action-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--medical-primary), var(--medical-secondary));
+    color: white;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 1.2rem;
+    box-shadow: var(--shadow-medium);
+}

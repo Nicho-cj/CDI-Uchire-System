@@ -1,0 +1,32 @@
+.staff-avatar-circle {
+    width: 45px;
+    height: 45px;
+    background: var(--medical-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-pill {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-medic {
+    background: rgba(10, 147, 150, 0.1);
+    color: var(--medical-primary);
+}
+
+.category-support {
+    background: rgba(148, 210, 189, 0.2);
+    color: #086b6d;
+}

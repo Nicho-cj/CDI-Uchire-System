@@ -1,0 +1,46 @@
+.audit_timeline-item {
+    position: relative;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    border-left: 2px solid #e2e8f0;
+}
+
+.audit_timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--medical-primary);
+    border: 2px solid white;
+}
+
+.audit-type-badge {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.action-create {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.action-update {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.action-delete {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.action-login {
+    background: #fef9c3;
+    color: #854d0e;
+}

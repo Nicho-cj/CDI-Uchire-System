@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+
+# Archivos de distribución / Build
+dist/
+out/
+
+# Base de Datos (Si prefieres que cada compañero inicie con una limpia)
+# Data/*.db
+# Data/*.db-wal
+# Data/*.db-shm
+
+# Registros de error
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Configuraciones de editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archivos temporales de reportes generados en las pruebas
+*.xlsx
+*.pdf
