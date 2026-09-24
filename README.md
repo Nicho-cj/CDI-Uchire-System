@@ -19,7 +19,7 @@ Sigue estos pasos para poner en marcha la aplicación en tu entorno local:
 
 1. **Clonar el repositorio**:
 ```bash
-git clone https://github.com/tu-usuario/nombre-del-repositorio.git
+git clone https://github.com/Nicho-cj/CDI-Uchire-System.git
 
 ```
 
