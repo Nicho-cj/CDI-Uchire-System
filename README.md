@@ -25,7 +25,8 @@ git clone https://github.com/Nicho-cj/CDI-Uchire-System.git
 
 
 *(O descarga el archivo ZIP del proyecto y extráelo en tu computadora).*
-2. **Instalar las dependencias**:
+
+ 2. **Instalar las dependencias**:
 Abre una terminal en la carpeta raíz del proyecto y ejecuta:
 ```bash
 npm install
